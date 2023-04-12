@@ -38,6 +38,7 @@ jobs:
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |-
         cd terraform-registry 
+        terraform destroy -auto-approve -input=false
         terraform apply -auto-approve -input=false
       
     - name: Build Docker Image    
