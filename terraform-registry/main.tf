@@ -1,5 +1,5 @@
 provider "google"{
-    project     = "terraform-project-vm"
+    project     = "cobalt-entropy-382106"
 
 }
 
