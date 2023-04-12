@@ -1,4 +1,4 @@
-name: Create Registry and Push image to Registry
+name: Create Registry and Push image to artifact registry
 on:
   push:
     branches: [ main ]
