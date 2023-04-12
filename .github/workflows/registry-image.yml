@@ -54,10 +54,10 @@ jobs:
     - name: Tag and Push Docker Image to Registry
       run: |-
         cd docker
-        docker image tag ots-image:latest us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo/$IMAGE_NAME:latest
-        docker image tag ots-image:latest us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo/$IMAGE_NAME:${{ github.sha }}
-        docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo/$IMAGE_NAME:latest
-        docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo/$IMAGE_NAME:${{ github.sha }}
+        docker image tag ots-image:latest us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:latest
+        docker image tag ots-image:latest us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:${{ github.sha }}
+        docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:latest
+        docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:${{ github.sha }}
         
         
         
