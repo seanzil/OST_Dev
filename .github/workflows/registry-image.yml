@@ -2,6 +2,8 @@ name: Create Registry and Push image to artifact registry
 on:
   push:
     branches: [ main ]
+    
+  workflow_dispatch:
 jobs:
   build-push-gcr:
     name: Build and Push to GCP
