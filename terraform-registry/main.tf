@@ -3,9 +3,9 @@ provider "google"{
 
 }
 
-resource "google_artifact_registry_repository" "ots-project-repo" {
+resource "google_artifact_registry_repository" "ots-project-repo-test" {
   location      = "us-central1"
-  repository_id = "ots-project-repo"
-  description   = "ots-project-repo docker repository"
+  repository_id = "ots-project-repo-test"
+  description   = "example docker repository"
   format        = "DOCKER"
 }
