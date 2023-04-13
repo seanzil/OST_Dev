@@ -25,24 +25,6 @@ jobs:
       with:
         credentials_json: '${{ secrets.SERVICE_ACCOUNT_KEY }}' 
     
-    - uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.1.9
-        
-    - name: Terraform init
-      run: |- 
-        cd terraform-registry
-        terraform init
-      
-    - name: Debug
-      run: echo "$GITHUB_REF"
-
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: |-
-        cd terraform-registry 
-        terraform destroy -auto-approve -input=false
-        terraform apply -auto-approve -input=false
       
     - name: Build Docker Image    
       run: |-
