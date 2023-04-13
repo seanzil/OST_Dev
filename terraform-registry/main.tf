@@ -1,5 +1,5 @@
 provider "google"{
-    project     = "cobalt-entropy-382106"
+    project     = "terraform-project-vm"
 
 }
 
@@ -12,7 +12,7 @@ resource "google_artifact_registry_repository" "ots-project-repo-test" {
 
 terraform {
   backend "gcs" {
-    bucket  = "terraform-backend-bucket-1123"
+    bucket  = "terraform-project-vm-bucket"
     prefix  = "terraform/state"
   }
 }
