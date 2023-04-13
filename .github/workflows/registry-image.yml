@@ -43,6 +43,8 @@ jobs:
       run: |-
         gcloud config get-value project
         echo "#########"
+        gcloud auth configure-docker
+        echo "##"
         docker image tag ${{ env.IMAGE_NAME }}:latest us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/${{ env.IMAGE_NAME }}:latest
         docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/${{ env.IMAGE_NAME }}:latest
         
