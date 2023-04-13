@@ -63,5 +63,3 @@ jobs:
         docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:${{ github.sha }}
         
         
-        
-        
