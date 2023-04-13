@@ -1,3 +1,6 @@
+env:
+  IMAGE_NAME: ots-image
+
 name: Create Registry and Push image to artifact registry again
 on:
   push:
@@ -8,8 +11,7 @@ jobs:
   build-push-gcr:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: ots-image
+
     defaults:
       run:
         shell: bash
@@ -44,7 +46,7 @@ jobs:
     - name: Build Docker Image    
       run: |-
         cd docker
-        docker build -t $IMAGE_NAME:latest .
+        docker build -t ${{ env.IMAGE_NAME }}:latest .
     
     - name: Debug
       run: docker images
@@ -57,8 +59,8 @@ jobs:
     - name: Tag and Push Docker Image to Registry
       run: |-
   
-        docker image tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:latest
-        docker image tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:${{ github.sha }}
-        docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:latest
-        docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:${{ github.sha }}
+        docker image tag ${{ env.IMAGE_NAME }}:latest us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/${{ env.IMAGE_NAME }}:latest
+        docker image tag ${{ env.IMAGE_NAME }}:latest us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/${{ env.IMAGE_NAME }}:${{ github.sha }}
+        docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/${{ env.IMAGE_NAME }}:latest
+        docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/${{ env.IMAGE_NAME }}:${{ github.sha }}
         
