@@ -11,7 +11,7 @@ jobs:
   build-push-gcr:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
-
+    
     defaults:
       run:
         shell: bash
@@ -19,21 +19,38 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Authenticate to Google
-      id: 'auth'
-      uses: 'google-github-actions/auth@v0'
+    - uses: google-github-actions/setup-gcloud@v0
       with:
-        credentials_json: '${{ secrets.SERVICE_ACCOUNT_KEY }}' 
-    
+        service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+        project_id: ${{ secrets.PROJECT_ID }}
+        export_default_credentials: true
+    - uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.1.9
+        
+    - name: Terraform init
+      run: |- 
+        cd terraform-registry
+        terraform init
+      
+    - name: Debug
+      run: echo "$GITHUB_REF"
+
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |-
+        cd terraform-registry 
+        terraform destroy -auto-approve -input=false
+        terraform apply -auto-approve -input=false
       
     - name: Build Docker Image    
       run: |-
         cd docker
-        docker build -t us-central1-docker.pkg.dev/cobalt-entropy-382106/ots-project-repo-test/${{ env.IMAGE_NAME }}:latest .
+        docker build -t $IMAGE_NAME:latest .
     
     - name: Debug
-      run: docker images
-    
+      run: dokcer images
+  
     - name: Configure Docker Client
       run: |-
         gcloud auth configure-docker --quiet
@@ -41,11 +58,9 @@ jobs:
     
     - name: Tag and Push Docker Image to Registry
       run: |-
-        gcloud config get-value project
-        echo "#########"
-        gcloud auth configure-docker
-        echo "##"
-        docker push us-central1-docker.pkg.dev/cobalt-entropy-382106/ots-project-repo-test/${{ env.IMAGE_NAME }}:latest
-        
-        
+  
+        docker image tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:latest
+        docker image tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:${{ github.sha }}
+        docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:latest
+        docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:${{ github.sha }}
         
