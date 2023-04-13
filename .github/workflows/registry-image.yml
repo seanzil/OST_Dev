@@ -53,7 +53,7 @@ jobs:
     
     - name: Tag and Push Docker Image to Registry
       run: |-
-        working-directory: docker
+        cd docker
         docker image tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:latest
         docker image tag $IMAGE_NAME:latest us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:${{ github.sha }}
         docker push us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/ots-project-repo-test/$IMAGE_NAME:latest
