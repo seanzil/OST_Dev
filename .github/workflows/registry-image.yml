@@ -1,7 +1,7 @@
 env:
   IMAGE_NAME: ots-image
-  ID_PROJECT: 
-  PROJECT_REPO:
+  ID_PROJECT: terraform-project-vm
+  PROJECT_REPO: ots-project-repo-test
 
 name: Create Registry and Push image to artifact registry again
 on:
