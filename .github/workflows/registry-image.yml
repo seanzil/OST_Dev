@@ -47,7 +47,7 @@ jobs:
         docker build -t $IMAGE_NAME:latest .
     
     - name: Debug
-      run: dokcer images
+      run: docker images
   
     - name: Configure Docker Client
       run: |-
