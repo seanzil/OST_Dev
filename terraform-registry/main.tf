@@ -9,3 +9,10 @@ resource "google_artifact_registry_repository" "ots-project-repo-test" {
   description   = "example docker repository"
   format        = "DOCKER"
 }
+
+terraform {
+  backend "gcs" {
+    bucket  = "terraform-backend-bucket-1123"
+    prefix  = "terraform/state"
+  }
+}
