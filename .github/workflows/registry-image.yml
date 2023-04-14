@@ -66,17 +66,4 @@ jobs:
         docker push us-central1-docker.pkg.dev/${{ env.ID_PROJECT }}/${{ env.PROJECT_REPO }}/${{ env.IMAGE_NAME }}:latest
         docker push us-central1-docker.pkg.dev/${{ env.ID_PROJECT }}/${{ env.PROJECT_REPO }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
         
-    - name: Scan Docker image
-      run: |
-        IMAGE=${{ env.PROJECT_REPO }}/${{ env.IMAGE_NAME }}:latest
-        DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' $IMAGE)
-        gcloud artifacts analyze-image $DIGEST --async --artifact-url=${{ env.IMAGE_NAME }}:latest
-        
-    - name: Pull Docker image
-      run: docker pull gcr.io/$ID_PROJECT/$IMAGE_NAME:latest
-      
-    - name: Tag Docker image
-      run: |
-        IMAGE=gcr.io/$ID_PROJECT/$IMAGE_NAME
-        DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' $IMAGE)
-        docker tag $IMAGE $DIGEST   
+    
