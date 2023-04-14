@@ -47,3 +47,4 @@ jobs:
       - name: Get scan results
         run: |
           gcloud artifacts describe $(echo ${{ steps.analyze_image.outputs.artifacts_url }} | sed 's|.*/||')
+          
