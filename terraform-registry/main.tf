@@ -1,5 +1,5 @@
-provider "google" {
-    project     = "terraform-project-zilligen"
+provider "google"{
+    project     = "terraform-project-vm"
 
 }
 
@@ -12,7 +12,7 @@ resource "google_artifact_registry_repository" "ots-project-repo" {
 
 terraform {
   backend "gcs" {
-    bucket  = "terraform-project-zilligen-bucket"
+    bucket  = "terraform-project-vm-bucket"
     prefix  = "terraform/state/ots"
   }
 }
